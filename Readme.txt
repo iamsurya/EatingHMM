@@ -1,0 +1,1 @@
+Learning HMM's and then using them to detect eating.

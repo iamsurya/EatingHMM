@@ -1,0 +1,23 @@
+	Assign all segments as NE
+	For all MD
+		For all GT's
+			if MD class = EA continue;
+			if MDS >= GTE: NEA continue
+			if MDE <= GTS: NEA continue
+			if MDS >= GTS and MDE <= GTE: Assign eating, continue % MD Inside GT
+			if MDS <= GTS and MDE >= GTE: Assign earting? continue % Gt inside MD
+			if MDS >= GTS and MDE >  GTE: Calculate Overlap and assign class
+			if MDS  < GTS and MDE <= GTE: Calculate overlap and assign class
+
+	Assign all segments as NE
+	For all MD
+		For all GT's
+			if MD class = EA continue;
+			if PotentialEA[p][1] >= EventEnd[i]: NEA continue
+			if PotentialEA[p][2] <= EventStart[i]: NEA continue
+			if PotentialEA[p][1] >= EventStart[i] and PotentialEA[p][2] <= EventEnd[i]: Assign eating, continue % MD Inside GT
+			if ((PotentialEA[p][1] <= EventStart[i]) && (PotentialEA[p][2] >= EventEnd[i])): Assign earting? continue % Gt inside MD
+			if ((PotentialEA[p][1] >= EventStart[i]) && (PotentialEA[p][2] >  EventEnd[i])): Calculate Overlap and assign class
+			if ((PotentialEA[p][1]  < EventStart[i]) && (PotentialEA[p][2] <= EventEnd[i])): Calculate overlap and assign class
+
+			
