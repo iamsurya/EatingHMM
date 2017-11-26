@@ -17,9 +17,9 @@ M = 1; % Gaussians
 prior = zeros(Q,1);
 transition = zeros(Q,Q);
 
+%% Calculate Raw Counts for the variables
 [sequences ~] = size(DataSequences);
 
-% Calculate Raw Counts for the variables
 for S = 1 : sequences
    [~, seqlength] = size(DataSequences{S,3});
     
@@ -35,3 +35,7 @@ for S = 1 : sequences
        CurrentState = NextState;
    end
 end
+
+%% Convert Raw Numbers to probabilities
+prior_ = prior / sum(prior)
+trans_ = transition ./ sum(transition,2)

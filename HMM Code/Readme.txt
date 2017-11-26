@@ -1,3 +1,3 @@
 Files:
 
-MeanCovCalc: Calculates means and covariances in data
+Parameter Generation\MeanCovCalc: Calculates means and covariances in data
