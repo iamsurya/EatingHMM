@@ -1,27 +1,45 @@
 %% This file estimates a path from observations, and checks its accuracy.
 % It uses training values calculated for the entire dataset using previous code.
-% It also loads data from p2110, calculates the most likely path, then 
-% calculates metrics for accuracy.
+% It also loads data from AllData.mat, and finds data for the specific file specified.
+% It then calculates the most likely path, and calculates metrics for accuracy.
 
 clear
 clc
 
+FileToFind = 2014;
+
 O = 4;
 T = 78;
 nex = 1;
-load('../HMM Dataset/2persondata.mat');
-load('../HMM Dataset/EatingHMMParams.mat');
+load('../../HMMDataset/AllData.mat');
+load('../../HMMDataset/EatingHMMParams.mat');
 M = 1;
 Q = 2;
 
-input = p2110;
-obs = p2110stateseq;
+
+%%
+[sz, ~] = size(DataSequences);
+for j = 1 : sz
+    if(str2num(DataSequences{j,1}(28:31)) == FileToFind)
+       break; 
+    end
+end
+%%
+input = DataSequences{j,4};
+obs = DataSequences{j,3};
 
 B = mixgauss_prob(input, mu, Sigma, mixmat);
 [path] = viterbi_path(prior_, trans_, B);
 
 compare = [obs+1; path]; % Only for looking at in Matlab
 
+%% Output Path
+fprintf('File: P%d\n', FileToFind);
+fprintf('Path: ');
+for i = 1:length(path)
+   fprintf('%d',path(i)-1); 
+end
+fprintf('\n');
 %% Calculate values for the confusion matrix
 TP = 0;
 FP = 0;
@@ -50,9 +68,7 @@ for i = 1 : length(path)
    end
 end
 
-
-% Calculate Accuracy and print the results
 ACC = (TP + TN) / (TP + TN + FP + FN);
 
 fprintf('File\tTP\tTN\tFP\tFN\tACC\n');
-fprintf('P2111\t%d\t%d\t%d\t%d\t%4.2f\n', TP, TN, FP, FN, ACC);
+fprintf('P%d\t%d\t%d\t%d\t%d\t%4.2f\n', FileToFind, TP, TN, FP, FN, ACC);
