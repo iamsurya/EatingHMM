@@ -36,7 +36,7 @@ double emission[STATES][PMF_VALS] = {
 		{0.2,0.3,0.3,0.2},
 		{0.3,0.2,0.2,0.3}};
 
-// int input[INPUT_LENGTH] = {2,2,1,0,1,3,2,0,0}; // GGCACTGAA
+int _input[INPUT_LENGTH] = {2,2,1,0,1,3,2,0,0}; // GGCACTGAA
 int input[INPUT_LENGTH] = {3,1,0,2,1,2,2,1,3}; // CAGCGGCT
 
 char NUM2CHAR_[STATES] = {'H', 'L'};
@@ -57,7 +57,7 @@ printf("\n");
 ** The most probable state (for path) is the one with the maximum value */
 for(t = 1; t < INPUT_LENGTH; t++)
 {
-	printf("%d ", t);
+	//printf("%d ", t);
 	for(s = 0; s < STATES; s++)
 	{
 		maxval = -99999999999999999999999999999999.0;
@@ -75,28 +75,35 @@ for(t = 1; t < INPUT_LENGTH; t++)
 		}
 
 		plogs[s][t] = log2(emission[s][input[t]]) + maxval;
-		printf("%e(%e, %e)\t", plogs[s][t], log2(emission[s][input[t]]), maxval);
+
+	/* Store which state brought me here */
+	path[t][s] = maxindex;
+	printf("%d %d %d\t", t, s, maxindex);
+	printf("%4.2e(%4.2e, %4.2e)\n", plogs[s][t], log2(emission[s][input[t]]), maxval);
 	}
-	path[t][s] = maxindex; //(plogs[0][t] > plogs[1][t]? 0 : 1);
-	//printf("%d\n", path[t][s]);
+	
+	
+	
 }
 
-	/* backward algorithm starts at max probability at end */
-max=0;
-for (s=1; s<STATES; s++)
-  if (pow(2,plogs[INPUT_LENGTH-1][s]) > pow(2,plogs[INPUT_LENGTH-1][max]))
-    max=s;
-output[INPUT_LENGTH-1]=max;
-	/* it then recursively follows path backward that got here */
-for (t=INPUT_LENGTH-2; t>=0; t--)
-  {
-  output[t]=path[t+1][output[t+1]];
-  }
 
-for(t = 0; t<INPUT_LENGTH; t++)
+/* Backward tracking */
+
+/* First find the state with the highest probability */
+max = 0;
+for(s = 1; s < STATES; s++)
+	if(plogs[s][INPUT_LENGTH - 1] > plogs[max][INPUT_LENGTH - 1])
+		max = s;
+
+output[INPUT_LENGTH-1] = max;
+
+for(t = INPUT_LENGTH - 2; t >= 0; t--)
 {
-	printf("%c", NUM2CHAR_[output[t]]);
+	output[t] = path[t+1][output[t+1]];
 }
+
+for(t = 0; t < INPUT_LENGTH; t++)
+	printf("%c", NUM2CHAR_[output[t]]);
 
 printf("\n");
 }
