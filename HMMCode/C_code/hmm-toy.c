@@ -83,8 +83,8 @@ for (i=1; i<INPUT_LENGTH; i++)
     }
   }
 
-if(0)
 	/* display forward probabilities, both p and log(p) */
+if(0)
 for (i=0; i<INPUT_LENGTH; i++)
   {
   for (s=0; s<STATES; s++)
@@ -113,6 +113,11 @@ for (i=INPUT_LENGTH-2; i>=0; i--)
 for (i=0; i<INPUT_LENGTH; i++)
   printf("%d",output[i]);
 printf("\n");
+
+for (i=0; i<INPUT_LENGTH; i++)
+  printf("%d",path[i]);
+printf("\n");
+
 
 }
 
