@@ -1,4 +1,4 @@
-
+	/* Old version, the probability function uses incorrect math */
 	/*
 	** Example implementation of an HMM.
 	** Converted from hmm-foods.c by Adam Hoover

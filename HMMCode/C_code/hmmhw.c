@@ -86,9 +86,7 @@ for(t = 1; t < INPUT_LENGTH; t++)
 	
 }
 
-
 /* Backward tracking */
-
 /* First find the state with the highest probability */
 max = 0;
 for(s = 1; s < STATES; s++)
@@ -99,7 +97,7 @@ output[INPUT_LENGTH-1] = max;
 
 for(t = INPUT_LENGTH - 2; t >= 0; t--)
 {
-	output[t] = path[t+1][output[t+1]];
+	output[t] = path[t+1][output[t+1]]; /* Op[t] is the state pointed out by the state with max probability in t+1.
 }
 
 for(t = 0; t < INPUT_LENGTH; t++)
