@@ -76,10 +76,10 @@ for(t = 1; t < INPUT_LENGTH; t++)
 
 		plogs[s][t] = log2(emission[s][input[t]]) + maxval;
 
-	/* Store which state brought me here */
-	path[t][s] = maxindex;
-	printf("%d %d %d\t", t, s, maxindex);
-	printf("%4.2e(%4.2e, %4.2e)\n", plogs[s][t], log2(emission[s][input[t]]), maxval);
+		/* Store which state brought me here */
+		path[t][s] = maxindex;
+		printf("%d %d %d\t", t, s, maxindex);
+		printf("%4.2e(%4.2e, %4.2e)\n", plogs[s][t], log2(emission[s][input[t]]), maxval);
 	}
 	
 	
